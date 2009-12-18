@@ -1,0 +1,17 @@
+bellStyle: VisualBell
+maxHistorySize: 1000
+editMode: Emacs
+completionType: ListCompletion
+completionPaging: True
+completionPromptLimit: 200
+listCompletionsImmediately: True
+
+bind: { { } left
+bind: ( ( ) left
+bind: [ [ ] left
+--bind: } right
+--bind: ] right
+--bind: ) right
+
+bind: ctrl-p up
+bind: ctrl-n down
