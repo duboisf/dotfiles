@@ -1,0 +1,10 @@
+quiet=yes
+fs=yes
+ao=sdl
+vo=gl
+monitoraspect=16:9
+stop-xscreensaver=0
+vsync=yes
+subfont-text-scale=3
+ass-force-style='Default.PrimaryColour=&H0000FFFF,Default.OutlineColour=&H00000000'
+ass=yes
