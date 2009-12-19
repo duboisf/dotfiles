@@ -14,6 +14,9 @@ compinit
 # End of lines added by compinstall
 #######################################
 
+autoload colors
+colors
+
 # ALIASES
 alias df="df -H"
 alias du="du -h --max-depth=1"
@@ -45,6 +48,15 @@ autoload -U promptinit
 promptinit
 prompt adam2 blue yellow red green
 
+##############################
+# Completion Styles
+##############################
+
+function _force_rehash() {
+  (( CURRENT == 1 )) && rehash
+  return 1	# Because we didn't really complete anything
+}
+
 # Remote completion!
 # ssh, scp, ping, host
 zstyle ':completion:*:scp:*' tag-order \
@@ -73,15 +85,6 @@ zstyle -e ':completion:*:(ssh|scp):*' hosts 'reply=(
       ${=${${${${(@M)${(f)"$(<~/.ssh/config)"}:#Host *}#Host }:#*\**}:#*\?*}}
       )'
 
-##############################
-# Completion Styles
-##############################
-
-function _force_rehash() {
-  (( CURRENT == 1 )) && rehash
-  return 1	# Because we didn't really complete anything
-}
-
 # list of completers to use
 zstyle ':completion:*' completer _expand _complete _ignored _force_rehash _match _correct _approximate _prefix
 
@@ -92,7 +95,7 @@ zstyle -e ':completion:*:approximate:*' max-errors \
 zstyle ':completion::complete:*' use-cache on
 zstyle ':completion::complete:*' cache-path ~/.zsh/cache/$HOST
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-#zstyle ':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the character to insert%s'
+zstyle ':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the character to insert%s'
 zstyle ':completion:*' menu select=1 _complete _ignored _approximate
 zstyle -e ':completion:*:approximate:*' max-errors \
     'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
@@ -105,6 +108,14 @@ zstyle ':completion:*:messages' format '%d'
 zstyle ':completion:*:warnings' format 'No matches for: %d'
 zstyle ':completion:*:corrections' format '%B%d (errors: %e)%b'
 zstyle ':completion:*' group-name ''
+
+# Complete process IDs with menu selection
+zstyle ':completion:*:*:kill:*' menu yes select
+zstyle ':completion:*:kill:*' force-list always
+# Normally command is only 'ps', change that to 'ps x' to get all my processes
+zstyle ':completion:*:kill:*:processes' command "ps x"
+
+#zstyle ':completion:*:killall:*:processes-names' command "ps x" # | awk '{print $5}' | perl -wlne '/([a-zA-Z0-9]+)$/ and print $1' | sort -u"
 
 # ENVIRONMENT VARIABLES
 export EDITOR=vim
