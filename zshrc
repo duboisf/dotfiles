@@ -1,23 +1,32 @@
-# Lines configured by zsh-newuser-install
 HISTFILE=~/.zsh_history
 HISTSIZE=10000
 SAVEHIST=10000
-setopt appendhistory autocd extendedglob notify
-unsetopt beep
 bindkey -e
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
-zstyle :compinstall filename '/home/fred/.zshrc'
 
+##############################
+# Modules
+##############################
 autoload -Uz compinit
 compinit
-# End of lines added by compinstall
-#######################################
 
 autoload colors
 colors
 
+autoload -Uz vcs_info
+
+precmd() {
+  psvar=()
+  vcs_info
+  [[ -n $vcs_info_msg_0_ ]] && psvar[1]="$vcs_info_msg_0_"
+}
+
+autoload -U promptinit
+promptinit
+prompt adam2 blue yellow red green
+
+##############################
 # ALIASES
+##############################
 alias df="df -H"
 alias du="du -h --max-depth=1"
 alias ls="ls --color=auto"
@@ -41,12 +50,13 @@ alias q="popd"
 alias -g G="| grep"
 alias psG="ps aux G"
 
+##############################
+# Options
+##############################
 setopt hist_ignore_all_dups
 setopt autopushd pushdignoredups
-
-autoload -U promptinit
-promptinit
-prompt adam2 blue yellow red green
+setopt appendhistory autocd extendedglob notify
+unsetopt beep
 
 ##############################
 # Completion Styles
@@ -56,6 +66,8 @@ function _force_rehash() {
   (( CURRENT == 1 )) && rehash
   return 1	# Because we didn't really complete anything
 }
+
+zstyle :compinstall filename '/home/fred/.zshrc'
 
 # Remote completion!
 # ssh, scp, ping, host
@@ -94,11 +106,13 @@ zstyle -e ':completion:*:approximate:*' max-errors \
 
 zstyle ':completion::complete:*' use-cache on
 zstyle ':completion::complete:*' cache-path ~/.zsh/cache/$HOST
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+
+# set colors
+eval $(dircolors)
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
 zstyle ':completion:*' list-prompt '%SAt %p: Hit TAB for more, or the character to insert%s'
 zstyle ':completion:*' menu select=1 _complete _ignored _approximate
-zstyle -e ':completion:*:approximate:*' max-errors \
-    'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
 zstyle ':completion:*' select-prompt '%SScrolling active: current selection at %p%s'
 
 # formatting and messages
@@ -115,11 +129,9 @@ zstyle ':completion:*:kill:*' force-list always
 # Normally command is only 'ps', change that to 'ps x' to get all my processes
 zstyle ':completion:*:kill:*:processes' command "ps x"
 
-#zstyle ':completion:*:killall:*:processes-names' command "ps x" # | awk '{print $5}' | perl -wlne '/([a-zA-Z0-9]+)$/ and print $1' | sort -u"
-
 # ENVIRONMENT VARIABLES
 export EDITOR=vim
 export PAGER=most
 
-PATH=$PATH:~/bin:~/.cabal/bin
+PATH=~/bin:~/.cabal/bin:$PATH
 export PATH
