@@ -46,7 +46,6 @@ alias ld="ls -dl */"            	# List only the directory.
 alias cd..="cd .."
 alias s="cd .."
 alias p="cd -"
-#alias d="dirs -v"
 alias cp="cp -i"
 alias mv="mv -i"
 alias rm="rm -i"
@@ -101,13 +100,6 @@ unsetopt beep
 ##############################
 # Completion Styles
 ##############################
-
-function _force_rehash() {
-  (( CURRENT == 1 )) && rehash
-  return 1	# Because we didn't really complete anything
-}
-
-#zstyle :compinstall filename '/home/fred/.zshrc'
 
 fred_comp() {
 	# Remote completion!
