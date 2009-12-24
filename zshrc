@@ -206,7 +206,7 @@ grmlcomp() {
     zstyle ':completion:*:history-words'   stop yes
 
     # match uppercase from lowercase
-    zstyle ':completion:*'                 matcher-list 'm:{a-z}={A-Z}'
+#    zstyle ':completion:*'                 matcher-list 'm:{a-z}={A-Z}'
 
     # separate matches into groups
     zstyle ':completion:*:matches'         group 'yes'
@@ -215,7 +215,7 @@ grmlcomp() {
     # if there are more than 5 options allow selecting from a menu
 #    zstyle ':completion:*'               menu select=5
     # Let's try interactive mode
-    zstyle ':completion:*'               menu select interactive yes
+    zstyle ':completion:*'                 menu select interactive yes
 
     zstyle ':completion:*:messages'        format '%d'
     zstyle ':completion:*:options'         auto-description '%d'
