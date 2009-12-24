@@ -202,13 +202,10 @@ grmlcomp() {
     zstyle ':completion:*:matches'         group 'yes'
     zstyle ':completion:*'                 group-name ''
 
-    if [[ "$NOMENU" -eq 0 ]] ; then
-        # if there are more than 5 options allow selecting from a menu
-        zstyle ':completion:*'               menu select=5
-    else
-        # don't use any menus at all
-        setopt no_auto_menu
-    fi
+    # if there are more than 5 options allow selecting from a menu
+    zstyle ':completion:*'               menu select=5
+    # Let's try interactive mode
+    zstyle ':completion:*'               menu interactive
 
     zstyle ':completion:*:messages'        format '%d'
     zstyle ':completion:*:options'         auto-description '%d'
@@ -431,3 +428,5 @@ export PATH
 # set colors
 eval $(dircolors)
 grmlcomp
+
+# vim:ts=4:sw=4:expandtab:cindent
