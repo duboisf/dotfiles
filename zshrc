@@ -19,14 +19,24 @@ prompt adam2 blue yellow red green
 autoload -Uz vcs_info
 
 vcs_precmd() {
-#  psvar=()
-  vcs_info
-#  [[ -n $vcs_info_msg_0_ ]] && psvar[1]="$vcs_info_msg_0_"
-  RPROMPT='${vcs_info_msg_0_}'
+    vcs_info
+    if [ -n $vcs_info_msg_0_ ]; then
+        status_icon=$(git_status)
+    fi
+    RPROMPT="${status_icon} ${vcs_info_msg_0_}"
 }
 
 # add-zsh-hook can only be called after loading promptinit
 add-zsh-hook precmd vcs_precmd
+
+# Show character if changes are pending
+git_status() {
+    if current_git_status=$(git status 2> /dev/null | grep 'Changes to be committed|Changed but not updated' 2> /dev/null); then
+        BOLD="%{"$'\033[01;39m'"%}"
+        echo "${BOLD}%F{1}⬆"
+        #echo "%F{1}⬆"
+    fi
+}
 
 zstyle ':vcs_info:*' actionformats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{1}%a%F{5}]%f '
 zstyle ':vcs_info:*' formats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f'
