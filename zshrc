@@ -34,7 +34,6 @@ git_status() {
     if current_git_status=$(git status 2> /dev/null | grep 'Changes to be committed|Changed but not updated' 2> /dev/null); then
         BOLD="%{"$'\033[01;39m'"%}"
         echo "${BOLD}%F{1}⬆"
-        #echo "%F{1}⬆"
     fi
 }
 
@@ -42,6 +41,7 @@ zstyle ':vcs_info:*' actionformats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{3}|%F{
 zstyle ':vcs_info:*' formats '%F{5}(%f%s%F{5})%F{3}-%F{5}[%F{2}%b%F{5}]%f'
 zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
 zstyle ':vcs_info:git:*' branchformat '%b%F{1}:%F{3}%r'
+zstyle ':vcs_info:*' enable git
 
 ##############################
 # ALIASES
