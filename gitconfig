@@ -1,0 +1,17 @@
+[user]
+	email = fred.dubois@gmail.com
+	name = Fred Dubois
+[color]
+	diff = true
+	branch = true
+	status = true
+[alias]
+	ci = commit
+	co = checkout
+	br = branch
+	st = status
+	ps = -p status
+[merge]
+	tool = meld
+[core]
+	autocrlf = input
