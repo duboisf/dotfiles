@@ -103,15 +103,27 @@ alias CH="./configure --help"
 # Options
 ##############################
 setopt hist_ignore_all_dups
-setopt autopushd pushdignoredups
-setopt appendhistory autocd extendedglob notify
+setopt auto_pushd 
+setopt pushd_ignore_dups
+setopt append_history 
+setopt auto_cd 
+setopt extended_glob 
+setopt notify
 unsetopt beep
+unsetopt list_ambiguous         # if ambiguous, list imediately (like show-all-if-ambiguous)
 
 ##############################
 # Completion Styles
 ##############################
 
+# run rehash on completion so new installed program are found automatically:
+_force_rehash() {
+    (( CURRENT == 1 )) && rehash
+    return 1
+}
+
 fred_comp() {
+    zstyle ':completion:*' auto_list
 	# Remote completion!
 	# ssh, scp, ping, host
 	zstyle ':completion:*:scp:*' tag-order \
@@ -148,7 +160,6 @@ fred_comp() {
 	    'reply=( $(( ($#PREFIX+$#SUFFIX)/2 )) numeric )'
 
 	zstyle ':completion::complete:*' use-cache on
-	zstyle ':completion::complete:*' cache-path ~/.zsh/cache/$HOST
 
 	zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
@@ -167,8 +178,24 @@ fred_comp() {
 	# Complete process IDs with menu selection
 	zstyle ':completion:*:*:kill:*' menu yes select
 	zstyle ':completion:*:kill:*' force-list always
-	# Normally command is only 'ps', change that to 'ps x' to get all my processes
-	zstyle ':completion:*:kill:*:processes' command "ps x"
+
+    # on processes completion complete all user processes
+    zstyle ':completion:*:processes'       command 'ps -au$USER'
+
+
+    zstyle ':completion:*:correct:*'       insert-unambiguous true
+
+    # Provide more processes in completion of programs like killall:
+    zstyle ':completion:*:processes-names' command 'ps c -u ${USER} -o command | uniq'
+
+    # complete manual by their section
+    zstyle ':completion:*:manuals'    separate-sections true
+    zstyle ':completion:*:manuals.*'  insert-sections   true
+    zstyle ':completion:*:man:*'      menu yes select
+
+    # don't complete backup files as executables
+    zstyle ':completion:*:complete:-command-::commands' ignored-patterns '(aptitude-*|*\~|emerald*)'
+
 }
 
 grmlcomp() {
@@ -213,9 +240,9 @@ grmlcomp() {
     zstyle ':completion:*'                 group-name ''
 
     # if there are more than 5 options allow selecting from a menu
-#    zstyle ':completion:*'               menu select=5
+    zstyle ':completion:*'               menu select=6
     # Let's try interactive mode
-    zstyle ':completion:*'                 menu select interactive yes
+#    zstyle ':completion:*'                 menu select interactive yes
 
     zstyle ':completion:*:messages'        format '%d'
     zstyle ':completion:*:options'         auto-description '%d'
@@ -257,12 +284,6 @@ grmlcomp() {
 
     # provide .. as a completion
     zstyle ':completion:*' special-dirs ..
-
-    # run rehash on completion so new installed program are found automatically:
-    _force_rehash() {
-        (( CURRENT == 1 )) && rehash
-        return 1
-    }
 
     ## correction
     # some people don't like the automatic correction - so run 'NOCOR=1 zsh' to deactivate it
@@ -437,6 +458,10 @@ export PATH
 
 # set colors
 eval $(dircolors)
+#fred_comp
 grmlcomp
+
+#exec 2>>(while read line; do
+#  print '\e[91m'${(q)line}'\e[0m' > /dev/tty; print -n $'\0'; done &)
 
 # vim:ts=4:sw=4:expandtab:cindent

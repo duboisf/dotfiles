@@ -1,6 +1,6 @@
 quiet=yes
 fs=yes
-ao=sdl
+#ao=sdl
 vo=gl
 monitoraspect=16:9
 stop-xscreensaver=0
