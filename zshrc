@@ -461,7 +461,8 @@ eval $(dircolors)
 #fred_comp
 grmlcomp
 
-#exec 2>>(while read line; do
-#  print '\e[91m'${(q)line}'\e[0m' > /dev/tty; print -n $'\0'; done &)
+# use the c preprocessor with distcc with compression (lzo)
+export DISTCC_HOSTS="--randomize localhost zangetsu,cpp,lzo"
+export CCACHE_PREFIX="distcc"
 
 # vim:ts=4:sw=4:expandtab:cindent
