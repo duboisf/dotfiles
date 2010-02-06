@@ -453,7 +453,7 @@ export PAGER=most
 # set terminal property (used e.g. by msgid-chooser)
 export COLORTERM="yes"
 
-PATH=~/bin:~/.cabal/bin:$PATH
+PATH=/sbin:/usr/sbin:~/bin:~/.cabal/bin:$PATH
 export PATH
 
 # set colors
