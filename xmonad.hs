@@ -9,17 +9,24 @@
 
 import XMonad
 import XMonad.Actions.CycleWS (prevWS, nextWS, shiftToPrev, shiftToNext)
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageDocks (avoidStruts)
+import XMonad.Util.Run (spawnPipe)
 import Data.Monoid
 import System.Exit
+import System.IO
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+
+myStatusBar = "dzen2 -x '0' -y '0' -h '24' -w '960' -ta 'l' -fg '#FFFFFF' -bg '#000000' -fn '-*-bitstream vera sans-medium-r-normal-*-11-*-*-*-*-*-*-*'"
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
 --
 --myTerminal      = "xterm"
 myTerminal      = "gnome-terminal"
+--myTerminal      = "terminal"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -76,10 +83,11 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
 
     -- launch dmenu
-    , ((modm,               xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
+    , ((modm .|. shiftMask, xK_p     ), spawn "exe=`dmenu_path | dmenu` && eval \"exec $exe\"")
 
     -- launch gmrun
-    , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+--    , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+    , ((modm,               xK_p     ), spawn "gmrun")
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -273,7 +281,17 @@ myStartupHook = return ()
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad defaults
+main =
+    spawnPipe "/usr/bin/xmobar /home/fred/.xmobarrc" >>=
+    xmonad . addXMobar
+
+-- Add xmobar spawned pipe to the logHook field of the XConfig
+addXMobar xmobarProc = defaults {
+      logHook = dynamicLogWithPP $ xmobarPP {
+            ppOutput = hPutStrLn xmobarProc
+          , ppTitle = xmobarColor "green" "" . shorten 50
+          }
+    }
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
