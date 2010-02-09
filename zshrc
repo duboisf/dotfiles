@@ -46,7 +46,8 @@ zstyle ':vcs_info:*' enable git
 # Open the current input of the terminal in an editor
 autoload edit-command-line
 zle -N edit-command-line
-bindkey -e '^e' edit-command-line
+# ^Xe == ctrl+x (release) e
+bindkey -e '^Xe' edit-command-line
 
 ##############################
 # ALIASES
