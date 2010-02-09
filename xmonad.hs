@@ -10,7 +10,7 @@
 import XMonad
 import XMonad.Actions.CycleWS (prevWS, nextWS, shiftToPrev, shiftToNext)
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.ManageDocks (avoidStruts)
+import XMonad.Hooks.ManageDocks (avoidStruts, manageDocks)
 import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Util.Run (spawnPipe)
 import Data.Monoid
@@ -239,7 +239,8 @@ myLayout = tiled ||| Mirror tiled ||| Full
 -- 'className' and 'resource' are used below.
 --
 myManageHook = composeAll
-    [ className =? "MPlayer"        --> doFloat
+    [ manageDocks
+    , className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
     , appName   =? "desktop_window" --> doIgnore
     , appName   =? "kdesktop"       --> doIgnore ]
@@ -285,7 +286,8 @@ main =
     spawnPipe "xmobar" >>= xmonad . addXMobar
 
 -- Modify XConfig to display top xmobar
-addXMobar xmobarProc = defaults {
+addXMobar xmobarProc =
+    defaults {
     -- smartBorders removes borders in some situations, like when you use
     -- mplayer in fullscreen and you don't want to see that red border
       layoutHook = smartBorders $ avoidStruts $ layoutHook defaults
