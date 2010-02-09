@@ -1,7 +1,7 @@
 Config { font = "xft:FreeMonoBold-12:bold"
        , bgColor = "black"
        , fgColor = "grey"
-       , position = Top
+       , position = TopW L 90
        , lowerOnStart = True
        , commands = [ Run Weather "CWFQ" ["-t","<station>: <tempC>C","-L","15","-H","25","--normal","green","--high","red","--low","blue"] 36000
                     , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 10
@@ -18,5 +18,5 @@ Config { font = "xft:FreeMonoBold-12:bold"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% | %cpu% | %memory% | %wlan0% }{ <fc=#ee9a00>%date%</fc>| %gmail% | %uname%"
+       , template = "%cpu% | %memory% | %wlan0% ||| %StdinReader% }{ <fc=#ee9a00>%date%</fc>| %gmail%"
        }
