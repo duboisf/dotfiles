@@ -1,4 +1,4 @@
-Config { font = "xft:FreeMonoBold-13:bold"
+Config { font = "xft:FreeMonoBold-12:bold"
        , bgColor = "black"
        , fgColor = "grey"
        , position = Top
@@ -18,5 +18,5 @@ Config { font = "xft:FreeMonoBold-13:bold"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%StdinReader% | %cpu% | %memory% * %swap% | %wlan0% }{ <fc=#ee9a00>%date%</fc>| %gmail% | %uname%"
+       , template = "%StdinReader% | %cpu% | %memory% | %wlan0% }{ <fc=#ee9a00>%date%</fc>| %gmail% | %uname%"
        }
