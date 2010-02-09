@@ -43,6 +43,11 @@ zstyle ':vcs_info:(sv[nk]|bzr):*' branchformat '%b%F{1}:%F{3}%r'
 zstyle ':vcs_info:git:*' branchformat '%b%F{1}:%F{3}%r'
 zstyle ':vcs_info:*' enable git
 
+# Open the current input of the terminal in an editor
+autoload edit-command-line
+zle -N edit-command-line
+bindkey -e '^e' edit-command-line
+
 ##############################
 # ALIASES
 ##############################
@@ -103,6 +108,7 @@ alias CH="./configure --help"
 # Options
 ##############################
 setopt hist_ignore_all_dups
+setopt inc_append_history
 setopt auto_pushd 
 setopt pushd_ignore_dups
 setopt append_history 
@@ -111,6 +117,8 @@ setopt extended_glob
 setopt notify
 unsetopt beep
 unsetopt list_ambiguous         # if ambiguous, list imediately (like show-all-if-ambiguous)
+setopt printexitvalue           # alert me if something goes wrong
+setopt histverify               # when using ! cmds, confirm first
 
 ##############################
 # Completion Styles
