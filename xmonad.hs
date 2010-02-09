@@ -11,6 +11,7 @@ import XMonad
 import XMonad.Actions.CycleWS (prevWS, nextWS, shiftToPrev, shiftToNext)
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks (avoidStruts)
+import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Util.Run (spawnPipe)
 import Data.Monoid
 import System.Exit
@@ -34,7 +35,7 @@ myFocusFollowsMouse = True
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 1
+myBorderWidth   = 2
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -67,7 +68,7 @@ myNumlockMask   = mod2Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["1","2","3","4","5","6","7","8","9"]
+myWorkspaces    = ["web","terms","chat"] ++ map show [4..9]
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -240,8 +241,8 @@ myLayout = tiled ||| Mirror tiled ||| Full
 myManageHook = composeAll
     [ className =? "MPlayer"        --> doFloat
     , className =? "Gimp"           --> doFloat
-    , resource  =? "desktop_window" --> doIgnore
-    , resource  =? "kdesktop"       --> doIgnore ]
+    , appName   =? "desktop_window" --> doIgnore
+    , appName   =? "kdesktop"       --> doIgnore ]
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -280,16 +281,17 @@ myStartupHook = return ()
 -- Now run xmonad with all the defaults we set up.
 
 -- Run xmonad with the settings you specify. No need to modify this.
---
 main =
-    spawnPipe "/usr/bin/xmobar /home/fred/.xmobarrc" >>=
-    xmonad . addXMobar
+    spawnPipe "xmobar" >>= xmonad . addXMobar
 
--- Add xmobar spawned pipe to the logHook field of the XConfig
+-- Modify XConfig to display top xmobar
 addXMobar xmobarProc = defaults {
-      logHook = dynamicLogWithPP $ xmobarPP {
+    -- smartBorders removes borders in some situations, like when you use
+    -- mplayer in fullscreen and you don't want to see that red border
+      layoutHook = smartBorders $ avoidStruts $ layoutHook defaults
+    , logHook    = dynamicLogWithPP $ xmobarPP {
             ppOutput = hPutStrLn xmobarProc
-          , ppTitle = xmobarColor "green" "" . shorten 50
+          , ppTitle  = xmobarColor "green" "" . shorten 60
           }
     }
 
