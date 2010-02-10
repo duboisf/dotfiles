@@ -36,7 +36,7 @@ myFocusFollowsMouse = True
 
 -- Width of the window border in pixels.
 --
-myBorderWidth   = 2
+myBorderWidth   = 1
 
 -- modMask lets you specify which modkey you want to use. The default
 -- is mod1Mask ("left alt").  You may also consider using mod3Mask
@@ -260,7 +260,7 @@ modifyConfig xmobarProc =
       layoutHook = smartBorders $ avoidStruts $ layoutHook defaults
     , logHook    = dynamicLogWithPP $ xmobarPP {
             ppOutput = hPutStrLn xmobarProc
-          , ppTitle  = xmobarColor "green" "" . shorten 60
+          , ppTitle  = xmobarColor "green" "" . shorten 70
           }
     } `additionalKeysP` myKeys
 
