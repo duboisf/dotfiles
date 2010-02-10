@@ -251,7 +251,7 @@ grmlcomp() {
     # if there are more than 5 options allow selecting from a menu
     zstyle ':completion:*'               menu select=5
     # Let's try interactive mode
-    zstyle ':completion:*'                 menu select=5 interactive yes
+#    zstyle ':completion:*'                 menu select=5 interactive yes
 
     zstyle ':completion:*:messages'        format '%d'
     zstyle ':completion:*:options'         auto-description '%d'
