@@ -10,9 +10,10 @@
 import XMonad
 import XMonad.Actions.CycleWS (prevWS, nextWS, shiftToPrev, shiftToNext)
 import XMonad.Hooks.DynamicLog
-import XMonad.Hooks.ManageDocks (avoidStruts, manageDocks)
+import XMonad.Hooks.ManageDocks (avoidStruts, manageDocks, ToggleStruts)
 import XMonad.Layout.NoBorders (smartBorders)
 import XMonad.Util.Run (spawnPipe)
+import XMonad.Util.EZConfig (additionalKeysP)
 import Data.Monoid
 import System.Exit
 import System.IO
@@ -122,7 +123,7 @@ templateKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
     -- See also the statusBar function from Hooks.DynamicLog.
-    --, ((modm              , xK_b     ), sendMessage ToggleStruts)
+--    , ((modm              , xK_b     ), sendMessage ToggleStruts)
     -- Quit xmonad
     , ((modm .|. shiftMask, xK_q     ), io (exitWith ExitSuccess))
     -- Restart xmonad
@@ -143,37 +144,37 @@ templateKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     --
     [((m .|. modm, key), screenWorkspace sc >>= flip whenJust (windows . f)) | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..] , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
 
-myKeys conf@(XConfig {XMonad.modMask = modm}) =
-    M.fromList $
+myKeys :: [(String, X ())]
+myKeys =
     -- Next, previous workspaces
-    [ ((modm,               xK_u), prevWS)
-    , ((modm,               xK_i), nextWS)
-    , ((modm .|. shiftMask, xK_u), shiftToPrev)
-    , ((modm .|. shiftMask, xK_i), shiftToNext)
+    [ ("M-u",   prevWS)
+    , ("M-i",   nextWS)
+    , ("M-S-u", shiftToPrev)
+    , ("M-S-i", shiftToNext)
     ]
+--    [ ((modm,               xK_u), prevWS)
+--    , ((modm,               xK_i), nextWS)
+--    , ((modm .|. shiftMask, xK_u), shiftToPrev)
+--    , ((modm .|. shiftMask, xK_i), shiftToNext)
+--    ]
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
 --
 myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
-
     -- mod-button1, Set the window to floating mode and move by dragging
-    [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w))
---                                       >> windows W.shiftMaster))
-
+    [ ((modm, button1), (\w -> focus w >> mouseMoveWindow w
+                                       >> windows W.shiftMaster))
     -- mod-button2, Raise the window to the top of the stack
---    , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
-
+    , ((modm, button2), (\w -> focus w >> windows W.shiftMaster))
     -- mod-button3, Set the window to floating mode and resize by dragging
-    , ((modm, button3), (\w -> focus w >> mouseResizeWindow w))
---                                       >> windows W.shiftMaster))
-
+    , ((modm, button3), (\w -> focus w >> mouseResizeWindow w
+                                       >> windows W.shiftMaster))
     -- you may also bind events to the mouse scroll wheel (button4 and button5)
     ]
 
 ------------------------------------------------------------------------
 -- Layouts:
-
 -- You can specify and transform your layouts by modifying these values.
 -- If you change layout bindings be sure to use 'mod-shift-space' after
 -- restarting (with 'mod-q') to reset your layout state to the new
@@ -251,15 +252,8 @@ myLogHook = return ()
 -- By default, do nothing.
 myStartupHook = return ()
 
-------------------------------------------------------------------------
--- Now run xmonad with all the defaults we set up.
-
--- Run xmonad with the settings you specify. No need to modify this.
-main =
-    spawnPipe "xmobar" >>= xmonad . addXMobar
-
--- Modify XConfig to display top xmobar
-addXMobar xmobarProc =
+-- Modify XConfig to display top xmobar and add additional key bindings
+modifyConfig xmobarProc =
     defaults {
     -- smartBorders removes borders in some situations, like when you use
     -- mplayer in fullscreen and you don't want to see that red border
@@ -268,7 +262,7 @@ addXMobar xmobarProc =
             ppOutput = hPutStrLn xmobarProc
           , ppTitle  = xmobarColor "green" "" . shorten 60
           }
-    }
+    } `additionalKeysP` myKeys
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
@@ -298,3 +292,9 @@ defaults = defaultConfig {
         logHook            = myLogHook,
         startupHook        = myStartupHook
     }
+
+------------------------------------------------------------------------
+-- Now run xmonad with all the defaults we set up.
+main =
+    spawnPipe "xmobar" >>= xmonad . modifyConfig
+
