@@ -118,7 +118,6 @@ setopt extended_glob
 setopt notify
 unsetopt beep
 unsetopt list_ambiguous         # if ambiguous, list imediately (like show-all-if-ambiguous)
-setopt printexitvalue           # alert me if something goes wrong
 setopt histverify               # when using ! cmds, confirm first
 
 ##############################
