@@ -69,7 +69,12 @@ myNumlockMask   = mod2Mask
 --
 -- > workspaces = ["web", "irc", "code" ] ++ map show [4..9]
 --
-myWorkspaces    = ["web","terms","chat"] ++ map show [4..9]
+
+myWorkspaces = [show i ++ ":" ++ name | (i, name) <- zip [1..maxWS] wsNames]
+                ++ map show [(nbNames + 1)..maxWS]
+    where wsNames = ["web","terms","chat"]
+          nbNames = length wsNames
+          maxWS = 9 :: Int
 
 -- Border colors for unfocused and focused windows, respectively.
 --
@@ -152,11 +157,6 @@ myKeys =
     , ("M-S-u", shiftToPrev)
     , ("M-S-i", shiftToNext)
     ]
---    [ ((modm,               xK_u), prevWS)
---    , ((modm,               xK_i), nextWS)
---    , ((modm .|. shiftMask, xK_u), shiftToPrev)
---    , ((modm .|. shiftMask, xK_i), shiftToNext)
---    ]
 
 ------------------------------------------------------------------------
 -- Mouse bindings: default actions bound to mouse events
