@@ -1,0 +1,13 @@
+#!/bin/bash
+## Quickly checks if I have new gmail
+
+# enter proper credentials here
+user=
+pass=
+
+count=`wget -T 3 -t 1 -q --secure-protocol=TLSv1 \
+ --no-check-certificate \
+ https://${user}:${pass}@mail.google.com/mail/feed/atom -O - \
+ | perl -wlne '/\<fullcount\>(\d+)\<\/fullcount\>/ and print "gmail: ", $1'`
+
+echo ${count}

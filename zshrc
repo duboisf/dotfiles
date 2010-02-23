@@ -73,6 +73,7 @@ alias as="aptitude search"
 alias q="popd"
 alias -g G="| grep"
 alias psG="ps aux G"
+alias lsf="ls -F"
 
 # listing stuff
 #a2# Execute \kbd{ls -lSrah}
