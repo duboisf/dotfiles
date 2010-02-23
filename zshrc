@@ -470,7 +470,8 @@ eval $(dircolors)
 grmlcomp
 
 # use the c preprocessor with distcc with compression (lzo)
-export DISTCC_HOSTS="--randomize localhost zangetsu,cpp,lzo"
+export DISTCC_HOSTS="--randomize localhost @zangestu.hopto.org,cpp,lzo"
 export CCACHE_PREFIX="distcc"
+export DISTCC_SSH=ssh
 
 # vim:ts=4:sw=4:expandtab:cindent
