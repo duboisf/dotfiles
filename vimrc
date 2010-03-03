@@ -121,3 +121,13 @@ au Bufenter *.hs compiler ghc
 " configure browser for haskell_doc.vim
 let g:haddock_browser = "firefox"
 
+function! UPDATE_TAGS()
+  let _f_ = expand("%:p")
+  let _cmd_ = '"ctags -a -f /dvr/tags --c++-kinds=+p --fields=+iaS --extra=+q " ' . '"' . _f_ . '"'
+  let _resp = system(_cmd_)
+  unlet _cmd_
+  unlet _f_
+  unlet _resp
+endfunction
+autocmd BufWrite *.C,*.cpp,*.h,*.c call UPDATE_TAGS()
+

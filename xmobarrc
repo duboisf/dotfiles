@@ -18,7 +18,7 @@ Config { font = "xft:FreeMonoBold-8:bold"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%cpu% | %memory% | %eth0% ||| %StdinReader% }{ <fc=#ee9a00>%date%</fc>| %gmail%"
+       , template = "%cpu% | %memory% ||| %StdinReader% }{ <fc=#ee9a00>%date%</fc>| %gmail% | "
        }
 --       , template = "%cpu% | %memory% | %wlan0% ||| %StdinReader% }{ <fc=#ee9a00>%date%</fc>| %gmail%"
 --                    , Run Cpu ["-t", "CPU: <total> (nice <nice>)", "-L","3","-H","50","--normal","green","--high","red"] 10
