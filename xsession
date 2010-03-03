@@ -4,7 +4,7 @@
 xrdb -merge .Xresources
  
 # swap caps lock and escape keys
-xmodmap .Xmodmap
+xmodmap /home/fred/.Xmodmap
 
 # use alt+shift to change keyboard layout between us and ca
 change_layout
