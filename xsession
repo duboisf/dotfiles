@@ -24,6 +24,8 @@ xsetroot -solid midnightblue
 # load gtk theme, xmodmap and stuff
 gnome-settings-daemon &
 
+gnome-power-manager &
+
 sleep 1s
 
 exec ssh-agent dbus-launch --exit-with-session xmonad

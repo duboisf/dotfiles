@@ -3,7 +3,7 @@ Config { font = "xft:FreeMonoBold-8:bold"
        , fgColor = "grey"
        , position = TopW L 95
        , lowerOnStart = True
-       , commands = [ Run Weather "CWFQ" ["-t","<station>: <tempC>C","-L","15","-H","25","--normal","green","--high","red","--low","blue"] 36000
+       , commands = [ Run Weather "KNYC" ["-t","NY: <tempC>C","-L","15","-H","25","--normal","green","--high","red","--low","blue"] 36000
                     , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 10
                     , Run Network "eth1" ["-L","0","-H","32","--normal","green","--high","red"] 10
                     , Run Network "wlan0" ["-L","0","-H","32","--normal","green","--high","red"] 10
@@ -12,13 +12,12 @@ Config { font = "xft:FreeMonoBold-8:bold"
                     , Run Swap [] 10
                     , Run Com "uname" ["-s","-r"] "" 36000
 		    , Run Com "sh" ["/home/fred/bin/gmail"] "gmail" 6000
-		    , Run Com "sh" ["/home/fred/bin/CWFQ"] "temp" 36000
     		    , Run Date "%a %b %_d %Y %H:%M:%S " "date" 10
 		    , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%cpu% | %memory% ||| %StdinReader% }{ <fc=#ee9a00>%date%</fc>| %gmail% | "
+       , template = "%cpu% | %memory% ||| %StdinReader% }{ <fc=#ee9a00>%date%</fc>| %KNYC% | %gmail% | "
        }
 --       , template = "%cpu% | %memory% | %wlan0% ||| %StdinReader% }{ <fc=#ee9a00>%date%</fc>| %gmail%"
 --                    , Run Cpu ["-t", "CPU: <total> (nice <nice>)", "-L","3","-H","50","--normal","green","--high","red"] 10
