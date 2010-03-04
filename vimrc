@@ -67,12 +67,12 @@ nmap ,m :Make<CR>
 function! RebuildCTags()
 python << EOF
 import os
-os.system('find -L -name "*.[ch]" | xargs cscope -b')
+#os.system('find -L -name "*.[ch]" | xargs cscope -b')
 # Build a ctags database compatible with omnicppcomplete
 os.system('ctags -R -I --c++-kinds=+p --fields=+iaS --extra=+q')
 EOF
-	silent! cscope kill -1
-	silent! cscope add cscope.out
+"	silent! cscope kill -1
+"	silent! cscope add cscope.out
 endfunction
 
 " Rebuild tags for Python files
@@ -122,6 +122,7 @@ au Bufenter *.hs compiler ghc
 let g:haddock_browser = "firefox"
 
 function! UPDATE_TAGS()
+  echo "UPDATE_TAGS"
   let _f_ = expand("%:p")
   let _cmd_ = '"ctags -a -f /dvr/tags --c++-kinds=+p --fields=+iaS --extra=+q " ' . '"' . _f_ . '"'
   let _resp = system(_cmd_)
@@ -129,5 +130,5 @@ function! UPDATE_TAGS()
   unlet _f_
   unlet _resp
 endfunction
-autocmd BufWrite *.C,*.cpp,*.h,*.c call UPDATE_TAGS()
+"autocmd BufWrite *.C,*.cpp,*.h,*.c call UPDATE_TAGS()
 

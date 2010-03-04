@@ -1,3 +1,3 @@
 #!/bin/bash
 
-setxkbmap -option grp:switch,grp:alt_caps_toggle us,ca
+setxkbmap -option grp:switch,grp:alt_shift_toggle us,ca

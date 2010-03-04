@@ -7,10 +7,10 @@ xrdb -merge .Xresources
 xmodmap /home/fred/.Xmodmap
 
 # use alt+shift to change keyboard layout between us and ca
-change_layout
+/home/fred/bin/change_layout
 
 # Set up an icon tray
-trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --transparent true --tint 0x000000 --alpha 0 --height 17
+trayer --edge top --align right --SetDockType true --SetPartialStrut true --expand true --width 5 --transparent true --tint 0x000000 --alpha 0 --height 17 &
 
 # Set the background color
 xsetroot -solid midnightblue
