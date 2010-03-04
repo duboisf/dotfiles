@@ -1,5 +1,7 @@
 #!/bin/bash
  
+nm-applet --sm-disable &
+
 # Load resources
 xrdb -merge .Xresources
  
@@ -19,9 +21,9 @@ xsetroot -solid midnightblue
  
 # while true ; do date ; sleep 60 ; done | dzen2 -e '' -x 400 -w $off -ta r -fg $FG -bg $BG -p &
 
-nm-applet --sm-disable &
-
 # load gtk theme, xmodmap and stuff
 gnome-settings-daemon &
+
+sleep 1s
 
 exec ssh-agent dbus-launch --exit-with-session xmonad
