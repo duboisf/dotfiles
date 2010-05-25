@@ -27,7 +27,8 @@ myStatusBar = "dzen2 -x '0' -y '0' -h '24' -w '960' -ta 'l' -fg '#FFFFFF' -bg '#
 -- certain contrib modules.
 --
 --myTerminal      = "xterm"
-myTerminal      = "gnome-terminal"
+--myTerminal      = "gnome-terminal"
+myTerminal      = "terminator"
 --myTerminal      = "terminal"
 
 -- Whether focus follows the mouse pointer.

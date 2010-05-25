@@ -106,6 +106,8 @@ alias lssmall="ls -Srl *(.oL[1,10])"   # display the smallest files
 alias CO="./configure"
 alias CH="./configure --help"
 
+# scala
+alias scala_with_cp="scala -cp `find ~/.m2 -name "*jar" | xargs | tr ' ' ':'`:target/classes"
 ##############################
 # Options
 ##############################
@@ -119,7 +121,7 @@ setopt extended_glob
 setopt notify
 unsetopt beep
 unsetopt list_ambiguous         # if ambiguous, list imediately (like show-all-if-ambiguous)
-setopt histverify               # when using ! cmds, confirm first
+#setopt histverify               # when using ! cmds, confirm first
 
 ##############################
 # Completion Styles
@@ -462,8 +464,14 @@ export PAGER=most
 # set terminal property (used e.g. by msgid-chooser)
 export COLORTERM="yes"
 
-PATH=/sbin:/usr/sbin:~/bin:~/.cabal/bin:$PATH
+PATH=~/Downloads/scala-2.8.0.Beta1-prerelease/bin:/sbin:/usr/sbin:~/bin:~/.cabal/bin:$PATH
 export PATH
+
+export SCALA_HOME=/home/fred/Downloads/scala-2.8.0.Beta1-prerelease
+export JAVA_HOME=/usr/lib/jvm/java-6-sun
+
+# buildr option to use fast scala compiler
+export USE_FSC=yes
 
 # set colors
 eval $(dircolors)

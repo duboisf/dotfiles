@@ -43,6 +43,7 @@ function! ToggleSpellChecking()
 		set spell
 		let g:FredSpellChecking=1
 		echo "Spell checking on"
+
 	elseif g:FredSpellChecking == 1
 		set spell!
 		let g:FredSpellChecking=0

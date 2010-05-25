@@ -1,9 +1,9 @@
 Config { font = "xft:FreeMonoBold-8:bold"
        , bgColor = "black"
        , fgColor = "grey"
-       , position = TopW L 95
+       , position = TopW L 90
        , lowerOnStart = True
-       , commands = [ Run Weather "KNYC" ["-t","NY: <tempC>C","-L","15","-H","25","--normal","green","--high","red","--low","blue"] 36000
+       , commands = [ Run Weather "KNYC" ["-t","NY: <tempC>C","-L","15","-H","25","--normal","green","--high","red","--low","blue"] 3000
                     , Run Network "eth0" ["-L","0","-H","32","--normal","green","--high","red"] 10
                     , Run Network "eth1" ["-L","0","-H","32","--normal","green","--high","red"] 10
                     , Run Network "wlan0" ["-L","0","-H","32","--normal","green","--high","red"] 10
