@@ -62,9 +62,6 @@ alias ld="ls -dl */"            	# List only the directory.
 alias cd..="cd .."
 alias s="cd .."
 alias p="cd -"
-alias cp="cp -i"
-alias mv="mv -i"
-alias rm="rm -i"
 alias less="less -R"
 alias grep="grep -P --color=auto"
 alias go="gnome-open"
@@ -482,5 +479,6 @@ grmlcomp
 export DISTCC_HOSTS="--randomize localhost @zangestu.hopto.org,cpp,lzo"
 export CCACHE_PREFIX="distcc"
 export DISTCC_SSH=ssh
+export ICAROOT=/home/fred/Apps/citrix
 
 # vim:ts=4:sw=4:expandtab:cindent
