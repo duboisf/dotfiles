@@ -1,0 +1,16 @@
+#!/bin/zsh
+
+if [ x"$HOME" = x ] ; then
+        export HOME=$(cd ~ ; pwd)
+fi
+
+if [ x"$HOSTNAME" = x ] ; then
+        export HOSTNAME=$(hostname)
+fi
+
+if [ $UID -eq 0 ]; then
+        PATH=~root/bin:$PATH
+else
+        PATH="${HOME}/bin:${PATH}"
+fi
+

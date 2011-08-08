@@ -54,7 +54,7 @@ bindkey -e '^Xe' edit-command-line
 ##############################
 alias df="df -H"
 alias du="du -h --max-depth=1"
-alias ls="ls --color=auto"
+alias ls="ls -G"
 alias l="ls -l -h"                 	# classical listing.
 alias ll="ls -l -h"    			# List detailled.
 alias la="ls -la -h"   			# List all.
@@ -461,24 +461,25 @@ export PAGER=most
 # set terminal property (used e.g. by msgid-chooser)
 export COLORTERM="yes"
 
-PATH=~/Downloads/scala-2.8.0.Beta1-prerelease/bin:/sbin:/usr/sbin:~/bin:~/.cabal/bin:$PATH
-export PATH
-
-export SCALA_HOME=/home/fred/Downloads/scala-2.8.0.Beta1-prerelease
-export JAVA_HOME=/usr/lib/jvm/java-6-sun
-
 # buildr option to use fast scala compiler
 export USE_FSC=yes
 
 # set colors
-eval $(dircolors)
-#fred_comp
+if test -x =dircolors; then
+	eval "`dircolors`"
+	export LS_COLORS="*.ogm=01;35:${LS_COLORS}"
+	export ZLS_COLORS=$LS_COLORS
+fi
 grmlcomp
 
 # use the c preprocessor with distcc with compression (lzo)
 export DISTCC_HOSTS="--randomize localhost @zangestu.hopto.org,cpp,lzo"
 export CCACHE_PREFIX="distcc"
 export DISTCC_SSH=ssh
-export ICAROOT=/home/fred/Apps/citrix
+
+# read from .zsh.d/*
+for zshrc_snipplet in ~/.zsh.d/[0-9][0-9]*[^~] ; do
+	source $zshrc_snipplet
+done
 
 # vim:ts=4:sw=4:expandtab:cindent
