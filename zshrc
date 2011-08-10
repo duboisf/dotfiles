@@ -474,7 +474,7 @@ if test -x =dircolors; then
 	eval "`dircolors`"
 	export LS_COLORS="*.ogm=01;35:${LS_COLORS}"
 	export ZLS_COLORS=$LS_COLORS
-fi
+fi 2>/dev/null
 grmlcomp
 
 # use the c preprocessor with distcc with compression (lzo)
