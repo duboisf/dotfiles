@@ -15,3 +15,8 @@
 	tool = meld
 [core]
 	autocrlf = input
+[branch]
+	# always rebase when pulling branches
+	autosetuprebase = always
+
+# vim: ft=gitconfig
