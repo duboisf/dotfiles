@@ -52,9 +52,14 @@ bindkey -e '^Xe' edit-command-line
 ##############################
 # ALIASES
 ##############################
+case `uname` in
+    "Linux")
+        alias ls="ls --color=always";;
+    "Darwin")
+        alias ls="ls -G";;
+esac
 alias df="df -H"
 alias du="du -h --max-depth=1"
-alias ls="ls -G"
 alias l="ls -l -h"                 	# classical listing.
 alias ll="ls -l -h"    			# List detailled.
 alias la="ls -la -h"   			# List all.
