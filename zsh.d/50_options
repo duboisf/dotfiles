@@ -1,0 +1,16 @@
+#!/usr/bin/zsh
+
+setopt hist_ignore_all_dups
+setopt inc_append_history
+setopt auto_pushd 
+setopt pushd_ignore_dups
+setopt append_history 
+setopt auto_cd 
+setopt extended_glob 
+setopt notify
+unsetopt beep
+# if ambiguous, list imediately (like show-all-if-ambiguous)
+setopt list_ambiguous
+# when using ! cmds, confirm first
+#setopt histverify               
+

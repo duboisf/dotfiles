@@ -1,0 +1,103 @@
+#!/usr/bin/zsh
+
+#f1# List symlinks in detail (more detailed version of 'readlink -f' and 'whence -s')
+sll() {
+    [[ -z "$1" ]] && printf 'Usage: %s <file(s)>\n' "$0" && return 1
+    for file in "$@" ; do
+        while [[ -h "$file" ]] ; do
+            ls -l $file
+            file=$(readlink "$file")
+        done
+    done
+}
+
+# zsh profiling
+profile() {
+    ZSH_PROFILE_RC=1 $SHELL "$@"
+}
+
+#f5# Create Directoy and \kbd{cd} to it
+mcd() {
+    mkdir -p "$@" && cd "$@"
+}
+
+#f5# (Mis)use \kbd{vim} as \kbd{less}
+viless() {
+    emulate -L zsh
+    vim --cmd 'let no_plugin_maps = 1' -c "so \$VIMRUNTIME/macros/less.vim" "${@:--}"
+}
+
+# zsh with perl-regex - use it e.g. via:
+# regcheck '\s\d\.\d{3}\.\d{3} Euro' ' 1.000.000 Euro'
+#f5# Checks whether a regex matches or not.\\&\quad Example: \kbd{regcheck '.\{3\} EUR' '500 EUR'}
+regcheck() {
+    emulate -L zsh
+    zmodload -i zsh/pcre
+    pcre_compile $1 && \
+    pcre_match $2 && echo "regex matches" || echo "regex does not match"
+}
+
+# d():Copyright 2005 Nikolai Weibull <nikolai@bitwi.se>
+# note: option AUTO_PUSHD has to be set
+#f5# Jump between directories
+d() {
+    emulate -L zsh
+    autoload -U colors
+    local color=$fg_bold[blue]
+    integer i=0
+    dirs -p | while read dir; do
+        local num="${$(printf "%-4d " $i)/ /.}"
+        printf " %s  $color%s$reset_color\n" $num $dir
+        (( i++ ))
+    done
+    integer dir=-1
+    read -r 'dir?Jump to directory: ' || return
+    (( dir == -1 )) && return
+    if (( dir < 0 || dir >= i )); then
+        echo d: no such directory stack entry: $dir
+        return 1
+    fi
+    cd ~$dir
+}
+
+#f1# Provides useful information on globbing
+H-Glob() {
+    echo -e "
+    /      directories
+    .      plain files
+    @      symbolic links
+    =      sockets
+    p      named pipes (FIFOs)
+    *      executable plain files (0100)
+    %      device files (character or block special)
+    %b     block special files
+    %c     character special files
+    r      owner-readable files (0400)
+    w      owner-writable files (0200)
+    x      owner-executable files (0100)
+    A      group-readable files (0040)
+    I      group-writable files (0020)
+    E      group-executable files (0010)
+    R      world-readable files (0004)
+    W      world-writable files (0002)
+    X      world-executable files (0001)
+    s      setuid files (04000)
+    S      setgid files (02000)
+    t      files with the sticky bit (01000)
+
+  print *(m-1)          # Files modified up to a day ago
+  print *(a1)           # Files accessed a day ago
+  print *(@)            # Just symlinks
+  print *(Lk+50)        # Files bigger than 50 kilobytes
+  print *(Lk-50)        # Files smaller than 50 kilobytes
+  print **/*.c          # All *.c files recursively starting in \$PWD
+  print **/*.c~file.c   # Same as above, but excluding 'file.c'
+  print (foo|bar).*     # Files starting with 'foo' or 'bar'
+  print *~*.*           # All Files that do not contain a dot
+  chmod 644 *(.^x)      # make all plain non-executable files publically readable
+  print -l *(.c|.h)     # Lists *.c and *.h
+  print **/*(g:users:)  # Recursively match all files that are owned by group 'users'
+  echo /proc/*/cwd(:h:t:s/self//) # Analogous to >ps ax | awk '{print $1}'<"
+}
+alias help-zshglob=H-Glob
+
