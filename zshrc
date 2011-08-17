@@ -457,6 +457,12 @@ H-Glob() {
 }
 alias help-zshglob=H-Glob
 
+setupDircolors() {
+	eval "`dircolors`"
+	export LS_COLORS="*.ogm=01;35:${LS_COLORS}"
+	export ZLS_COLORS=$LS_COLORS
+}
+
 ##############################
 # ENVIRONMENT VARIABLES
 ##############################
@@ -470,11 +476,7 @@ export COLORTERM="yes"
 export USE_FSC=yes
 
 # set colors
-if test -x =dircolors; then
-	eval "`dircolors`"
-	export LS_COLORS="*.ogm=01;35:${LS_COLORS}"
-	export ZLS_COLORS=$LS_COLORS
-fi 2>/dev/null
+which dircolors >/dev/null && setupDircolors
 grmlcomp
 
 # use the c preprocessor with distcc with compression (lzo)
@@ -483,7 +485,8 @@ export CCACHE_PREFIX="distcc"
 export DISTCC_SSH=ssh
 
 # read from .zsh.d/*
-for zshrc_snipplet in ~/.zsh.d/[0-9][0-9]*[^~] ; do
+for zshrc_snipplet in ~/.zsh.d/[0-9][0-9]*[^~]
+do
 	source $zshrc_snipplet
 done
 
