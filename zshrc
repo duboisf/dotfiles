@@ -109,7 +109,11 @@ alias CO="./configure"
 alias CH="./configure --help"
 
 # scala
-alias scala_with_cp="scala -cp `find ~/.m2 -name "*jar" | xargs | tr ' ' ':'`:target/classes"
+if test -d ~/.m2
+then
+	alias scala_with_cp="scala -cp `find ~/.m2 -name "*jar" | xargs | tr ' ' ':'`:target/classes"
+fi
+
 ##############################
 # Options
 ##############################
