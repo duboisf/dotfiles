@@ -1,2 +1,4 @@
 mplayer/gui.conf
 mplayer/gui.pl
+zsh.d/*local
+vim/.netrwhist

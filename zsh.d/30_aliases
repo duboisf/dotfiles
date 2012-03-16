@@ -1,0 +1,61 @@
+#!/usr/bin/zsh
+
+case `uname` in
+    "Linux")
+        alias ls="ls --color=always";;
+    "Darwin")
+        alias ls="ls -G";;
+esac
+
+alias df="df -H"
+alias du="du -h --max-depth=1"
+alias l="ls -l -h"
+alias ll="ls -l -h"
+alias la="ls -la -h"
+alias ld="ls -dl */"
+alias cd..="cd .."
+alias s="cd .."
+alias p="cd -"
+alias less="less -R"
+alias grep="grep -P --color=auto"
+alias go="gnome-open"
+alias ai="sudo aptitude install"
+alias as="aptitude search"
+alias q="popd"
+alias -g G="| grep"
+alias psG="ps aux G"
+alias lsf="ls -F"
+
+# listing stuff
+#a2# Execute \kbd{ls -lSrah}
+alias dir="ls -lSrah"
+#a2# Only show dot-directories
+alias lad='ls -d .*(/)'
+#a2# Only show dot-files
+alias lsa='ls -a .*(.)'
+#a2# Only files with setgid/setuid/sticky flag
+alias lss='ls -l *(s,S,t)'
+#a2# Only show 1st ten symlinks
+alias lsl='ls -l *(@)'
+#a2# Display only executables
+alias lsx='ls -l *(*)'
+#a2# Display world-{readable,writable,executable} files
+alias lsw='ls -ld *(R,W,X.^ND/)'
+#a2# Display the ten biggest files
+alias lsbig="ls -flh *(.OL[1,10])"
+#a2# Only show directories
+alias lsd='ls -d *(/)'
+#a2# Only show empty directories
+alias lse='ls -d *(/^F)'
+#a2# Display the ten newest files
+alias lsnew="ls -rl *(D.om[1,10])"
+#a2# Display the ten oldest files
+alias lsold="ls -rtlh *(D.om[1,10])"
+#a2# Display the ten smallest files
+alias lssmall="ls -Srl *(.oL[1,10])"
+
+alias CO="./configure"
+alias CH="./configure --help"
+
+# scala
+alias scala_with_cp="scala -cp `find ~/.m2 -name "*jar" | xargs | tr ' ' ':'`:target/classes"
