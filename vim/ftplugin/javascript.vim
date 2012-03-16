@@ -10,3 +10,6 @@ setlocal formatoptions=crql
 setlocal number
 
 ab sop System.out.println
+
+set makeprg=cat\ %\ \\\|\ rhino\ ~/bin/mylintrun.js\ %
+set errorformat=%f:%l:%c:%m

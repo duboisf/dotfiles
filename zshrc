@@ -103,8 +103,8 @@ alias lssmall="ls -Srl *(.oL[1,10])"   # display the smallest files
 alias CO="./configure"
 alias CH="./configure --help"
 
-# scala
-alias scala_with_cp="scala -cp `find ~/.m2 -name "*jar" | xargs | tr ' ' ':'`:target/classes"
+alias node="env NODE_NO_READLINE=1 rlwrap node"
+
 ##############################
 # Options
 ##############################
@@ -457,28 +457,15 @@ alias help-zshglob=H-Glob
 ##############################
 
 export EDITOR=vim
-export PAGER=most
+export PAGER=less
 # set terminal property (used e.g. by msgid-chooser)
 export COLORTERM="yes"
 
-PATH=~/Downloads/scala-2.8.0.Beta1-prerelease/bin:/sbin:/usr/sbin:~/bin:~/.cabal/bin:$PATH
+PATH=/var/lib/gems/1.8/bin:~/Apps/scala-2.8.1.final/bin:~/Downloads/scala-2.8.0.Beta1-prerelease/bin:/sbin:/usr/sbin:~/bin:~/.cabal/bin:$PATH
 export PATH
-
-export SCALA_HOME=/home/fred/Downloads/scala-2.8.0.Beta1-prerelease
-export JAVA_HOME=/usr/lib/jvm/java-6-sun
-
-# buildr option to use fast scala compiler
-export USE_FSC=yes
 
 # set colors
 eval $(dircolors)
-#fred_comp
 grmlcomp
-
-# use the c preprocessor with distcc with compression (lzo)
-export DISTCC_HOSTS="--randomize localhost @zangestu.hopto.org,cpp,lzo"
-export CCACHE_PREFIX="distcc"
-export DISTCC_SSH=ssh
-export ICAROOT=/home/fred/Apps/citrix
 
 # vim:ts=4:sw=4:expandtab:cindent

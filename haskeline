@@ -6,9 +6,9 @@ completionPaging: True
 completionPromptLimit: 200
 listCompletionsImmediately: True
 
-bind: { { } left
-bind: ( ( ) left
-bind: [ [ ] left
+--bind: { { } left
+--bind: ( ( ) left
+--bind: [ [ ] left
 --bind: } right
 --bind: ] right
 --bind: ) right

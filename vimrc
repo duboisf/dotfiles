@@ -1,11 +1,7 @@
 set nocompatible
 
 syntax on
-if has("gui_running")
-	set background=light
-else
-	set background=dark
-endif
+
 set tabstop=8
 set shiftwidth=8
 set cmdheight=2
@@ -63,6 +59,8 @@ command -nargs=* Make w | copen 3 | make <args> | cwindow 3
 command SaveAndMake w | make
 " nmap ,m :SaveAndMake<CR>
 nmap ,m :Make<CR>
+
+nmap ,f :FufFile<CR>
 
 " Rebuild tags for C files
 function! RebuildCTags()
@@ -133,3 +131,12 @@ function! UPDATE_TAGS()
 endfunction
 "autocmd BufWrite *.C,*.cpp,*.h,*.c call UPDATE_TAGS()
 
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+
+let g:inkpot_black_background = 1
+
+hi CursorLine ctermbg=235
+hi CursorColumn ctermbg=235
+
+set background=dark
