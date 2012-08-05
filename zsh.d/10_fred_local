@@ -15,4 +15,3 @@ alias gco='git checkout'
 alias g='git'
 alias gpl='git pull'
 alias gph='git push'
-
