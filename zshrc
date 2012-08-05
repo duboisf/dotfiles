@@ -244,7 +244,7 @@ export USE_FSC=yes
 
 # set colors
 if test -x =dircolors; then
-	eval "`dircolors`"
+	eval "`dircolors ~/.dircolors`"
 	export LS_COLORS="*.ogm=01;35:${LS_COLORS}"
 	export ZLS_COLORS=$LS_COLORS
 fi
@@ -255,5 +255,9 @@ grmlcomp
 for zshrc_snipplet in ~/.zsh.d/[0-9][0-9]*[^~] ; do
 	source $zshrc_snipplet
 done
+
+if [[ $TERM == "xterm" ]]; then
+    export TERM=xterm-256color
+fi
 
 # vim:ts=4:sw=4:expandtab:cindent
