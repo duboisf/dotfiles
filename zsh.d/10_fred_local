@@ -2,3 +2,17 @@
 
 export JAVA_HOME=/usr/lib/jvm/java-6-sun
 
+alias cb='cabal build'
+alias cc='cabal configure'
+alias ci='cabal install'
+
+alias ga='git add'
+alias gd='git diff'
+alias gs='git status -s'
+alias gl='git log'
+alias gci='git commit -v'
+alias gco='git checkout'
+alias g='git'
+alias gpl='git pull'
+alias gph='git push'
+
